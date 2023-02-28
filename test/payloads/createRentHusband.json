@@ -1,0 +1,21 @@
+{
+	"nameHusband": "Leonardo Silva Nascimento",
+	"dateOfBirth": "20/12/1995",
+	"sex": "Masculino",
+	"naturalness": "Brasil",
+	"birthplace": "Curitiba - PR",
+	"specialties": [
+		"Encanador",
+		"Eletricista",
+		"Marcineiro",
+		"Pedreiro"
+	],
+	"civilStatus": "Solteiro",
+	"zipCode": "81490030",
+	"state": "PR",
+	"city": "Curitiba",
+	"neighborhood": "Campo de Santana",
+	"street": "Rua Angêlo Tozim",
+	"number": "200",
+	"complement": "Bloco 4, Apê 303"
+}
