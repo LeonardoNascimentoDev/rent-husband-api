@@ -1,7 +1,7 @@
 import { IsNotEmpty, IsString, IsDateString } from 'class-validator'
 import { ApiProperty } from '@nestjs/swagger'
 
-export class UpdateRentHusbandDTO {
+export class UpdateUserDTO {
     @ApiProperty({
         example: 'Leonardo Silva Nascimento',
         description: 'Name of Rent Husband',
@@ -9,19 +9,19 @@ export class UpdateRentHusbandDTO {
     })
     @IsNotEmpty()
     @IsString()
-    nameHusband: string
+    name: string
 
     @ApiProperty({
-        example: 'Leonardo Silva Nascimento',
+        example: '12312323',
         description: 'Number document of Rent Husband',
         type: String,
     })
     @IsNotEmpty()
     @IsString()
-    documentNumber: string
+    cpfCnpj: string
 
     @ApiProperty({
-        example: 'Leonardo Silva Nascimento',
+        example: 'teste@teste.com',
         description: 'Email of Rent Husband',
         type: String,
     })
@@ -42,9 +42,8 @@ export class UpdateRentHusbandDTO {
         description: 'Persons gender',
         type: String,
     })
-    @IsNotEmpty()
     @IsString()
-    sex: string
+    sex?: string
 
     @ApiProperty({
         example: 'Brasil',
@@ -56,15 +55,6 @@ export class UpdateRentHusbandDTO {
     naturalness: string
 
     @ApiProperty({
-        example: 'Curitiba - PR',
-        description: 'State and city of birth',
-        type: String,
-    })
-    @IsNotEmpty()
-    @IsString()
-    birthplace: string
-
-    @ApiProperty({
         example: 'List of specialtie',
         description: 'Professional specialties',
         type: String,
@@ -72,15 +62,6 @@ export class UpdateRentHusbandDTO {
     @IsNotEmpty()
     @IsString()
     specialties: string
-
-    @ApiProperty({
-        example: 'Solteiro',
-        description: 'Persons marital status',
-        type: String,
-    })
-    @IsNotEmpty()
-    @IsString()
-    civilStatus: string
 
     @ApiProperty({
         example: '81490030',

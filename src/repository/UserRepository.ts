@@ -8,31 +8,31 @@ import {
 } from '@nestjs/common'
 import { InjectModel } from '@nestjs/mongoose'
 import { Model } from 'mongoose'
-import { RentHusband } from '../domain/model/RentHusband'
+import { User } from '../domain/model/User'
 // import { DateUtils } from '../utils/date-utils'
 
 @Injectable()
-export class RentHusbandRepository {
-    private logger = new Logger('RentHusbands')
+export class UserRepository {
+    private logger = new Logger('Users')
 
-    constructor(@InjectModel(RentHusband.name) private rentHusbandModel: Model<RentHusband>) {}
+    constructor(@InjectModel(User.name) private userModel: Model<User>) {}
 
-    async findAll(): Promise<RentHusband[]> {
-        if (!(await this.rentHusbandModel.find())) {
+    async findAll(): Promise<User[]> {
+        if (!(await this.userModel.find())) {
             throw new NotFoundException()
         }
         try {
-            return await this.rentHusbandModel.find().sort({ goal: -1 })
+            return await this.userModel.find().sort({ goal: -1 })
         } catch (err) {
             this.logger.error('Error when looking for rent husbands', err.stack)
             throw new InternalServerErrorException()
         }
     }
 
-    async findByRentHusbandById(id: string): Promise<RentHusband> {
+    async findByRentHusbandById(id: string): Promise<User> {
         // Validação caso o ID não exista
         try {
-            await this.rentHusbandModel.findById(id).exec()
+            await this.userModel.findById(id).exec()
         } catch (err) {
             if (err.kind === 'ObjectId') {
                 throw new NotFoundException('No husband was found for this id!')
@@ -41,19 +41,19 @@ export class RentHusbandRepository {
             throw new InternalServerErrorException()
         }
 
-        const rentHusband = await this.rentHusbandModel.findById(id).exec()
+        const rentHusband = await this.userModel.findById(id).exec()
         return rentHusband
     }
 
-    async findRentHusband(payload: RentHusband): Promise<RentHusband> {
-        const response = await this.rentHusbandModel.findOne({
-            documentNumber: payload.documentNumber,
+    async findRentHusband(payload: User): Promise<User> {
+        const response = await this.userModel.findOne({
+            cpfCnpj: payload.cpfCnpj,
             email: payload.email,
         })
         return response
     }
 
-    async create(payload: RentHusband) {
+    async create(payload: User) {
         if (await this.findRentHusband(payload)) {
             throw new ConflictException('Rent Husband already registered!')
         } else {
@@ -62,15 +62,15 @@ export class RentHusbandRepository {
             )
             payload.registerDate = date
             payload.lastModifyDate = date
-            const rentHusbandCreate = new this.rentHusbandModel(payload)
+            const rentHusbandCreate = new this.userModel(payload)
             return rentHusbandCreate.save()
         }
     }
 
-    async update(id: string, rentHusband: RentHusband): Promise<RentHusband> {
+    async update(id: string, rentHusband: User): Promise<User> {
         // Validação caso o ID não exista
         try {
-            await this.rentHusbandModel.findOne({
+            await this.userModel.findOne({
                 _id: id,
             })
         } catch (err) {
@@ -89,16 +89,16 @@ export class RentHusbandRepository {
         rentHusband.lastModifyDate = new Date(
             date.valueOf() - date.getTimezoneOffset() * 60000,
         )
-        await this.rentHusbandModel.findByIdAndUpdate(id, rentHusband)
+        await this.userModel.findByIdAndUpdate(id, rentHusband)
         // Objeto atualizado
-        const rentHusbandUpdate = await this.rentHusbandModel.findOne({ _id: id })
+        const rentHusbandUpdate = await this.userModel.findOne({ _id: id })
         return rentHusbandUpdate
     }
 
     async deleteById(id: string) {
         // Validação caso o ID não exista
         try {
-            await this.rentHusbandModel.findOne({
+            await this.userModel.findOne({
                 _id: id,
             })
         } catch (err) {
@@ -109,7 +109,7 @@ export class RentHusbandRepository {
             throw new InternalServerErrorException()
         }
 
-        const rentHusbandDeleted = this.rentHusbandModel
+        const rentHusbandDeleted = this.userModel
             .findOneAndDelete({ _id: id })
             .exec()
         return (await rentHusbandDeleted).remove()

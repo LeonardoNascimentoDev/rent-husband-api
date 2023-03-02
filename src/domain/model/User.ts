@@ -1,12 +1,12 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose'
 
 @Schema()
-export class RentHusband {
-    @Prop({ name: 'nameHusband', nullable: true })
-    nameHusband: string
+export class User {
+    @Prop({ name: 'name', nullable: true })
+    name: string
 
-    @Prop({ name: 'documentNumber', nullable: true })
-    documentNumber: string
+    @Prop({ name: 'cpfCnpj', nullable: true })
+    cpfCnpj: string
 
     @Prop({ name: 'email', nullable: true })
     email: string
@@ -15,19 +15,13 @@ export class RentHusband {
     dateOfBirth?: string
 
     @Prop({ name: 'sex', nullable: true })
-    sex: string
+    sex?: string
 
     @Prop({ name: 'naturalness', nullable: true })
     naturalness: string
-
-    @Prop({ name: 'birthplace', nullable: true })
-    birthplace: string
     
     @Prop({ name: 'specialties', nullable: true })
     specialties: string
-
-    @Prop({ name: 'civilStatus', nullable: true })
-    civilStatus: string
 
     @Prop({ name: 'zipCode', nullable: true })
     zipCode: string
@@ -59,4 +53,4 @@ export class RentHusband {
     _id?: string
 }
 
-export const RentHusbandSchema = SchemaFactory.createForClass(RentHusband)
+export const UserSchema = SchemaFactory.createForClass(User)

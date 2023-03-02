@@ -1,9 +1,9 @@
 import { HttpModule, Module } from '@nestjs/common'
 import { MongooseModule } from '@nestjs/mongoose'
-import { RentHusbandController } from './application/v1/RentHusbandController'
-import RentHusbandService from './service/RentHusbandService'
-import { RentHusband, RentHusbandSchema } from './domain/model/RentHusband'
-import { RentHusbandRepository } from './repository/RentHusbandRepository'
+import { UserController } from './application/v1/UserController'
+import UserService from './service/UserService'
+import { User, UserSchema } from './domain/model/User'
+import { UserRepository } from './repository/UserRepository'
 import * as dotenv from 'dotenv'
 dotenv.config()
 @Module({
@@ -16,13 +16,13 @@ dotenv.config()
 
     MongooseModule.forFeature([
         {
-        name: RentHusband.name,
-        schema: RentHusbandSchema,
-        collection: 'rent-husband',
+        name: User.name,
+        schema: UserSchema,
+        collection: 'user',
         },
         ]),
     ],
-    controllers: [RentHusbandController],
-    providers: [RentHusbandService, RentHusbandRepository],
+    controllers: [UserController],
+    providers: [UserService, UserRepository],
     })
 export class AppModule {}
