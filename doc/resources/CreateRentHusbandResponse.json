@@ -1,16 +1,20 @@
 {
-	"nameHusband": "Leonardo Silva Nascimento",
+	"name": "Leonardo Silva NascimentoW",
+	"cpfCnpj": "12312312121",
+	"email": "lsncwb@gmail.com",
 	"dateOfBirth": "20/12/1995",
 	"sex": "Masculino",
 	"naturalness": "Brasil",
-	"birthplace": "Curitiba - PR",
 	"specialties": [
-		"Encanador",
-		"Eletricista",
-		"Marcineiro",
-		"Pedreiro"
+		{
+			"id": 1,
+			"name": "Eletricista"
+		},
+		{
+			"id": 2,
+			"name": "Encanador"
+		}
 	],
-	"civilStatus": "Solteiro",
 	"zipCode": "81490030",
 	"state": "PR",
 	"city": "Curitiba",
@@ -18,8 +22,8 @@
 	"street": "Rua Angêlo Tozim",
 	"number": "200",
 	"complement": "Bloco 4, Apê 303",
-	"registerDate": "2023-02-27T23:11:03.750Z",
-	"lastModifyDate": "2023-02-27T23:11:03.750Z",
-	"_id": "63fd62b7196e800a9f991f7b",
+	"registerDate": "2023-03-08T15:36:34.352Z",
+	"lastModifyDate": "2023-03-08T15:36:34.352Z",
+	"_id": "6408d5b2f50accce1002193b",
 	"__v": 0
 }

@@ -12,19 +12,19 @@ export default class UserService {
         return response
     }
 
-    async findByRentHusbandById(id: string): Promise<User> {
-        const response = await this.repository.findByRentHusbandById(id)
+    async findByUserById(id: string): Promise<User> {
+        const response = await this.repository.findByUserById(id)
         return response
     }
 
-    async executeSave(payload: CreateUserDTO): Promise<User> {
+    async executeCreateUser(payload: CreateUserDTO): Promise<User> {
         const response = (await this.repository.create(payload)) as User
         return response
     }
 
     async executeUpdate(id: string, payload: CreateUserDTO): Promise<User> {
-        const rentHusband = await this.repository.update(id, payload)
-        return rentHusband
+        const user = await this.repository.update(id, payload)
+        return user
     }
 
     async deleteById(id: string): Promise<User> {

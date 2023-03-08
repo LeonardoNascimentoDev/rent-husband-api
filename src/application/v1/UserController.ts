@@ -1,6 +1,6 @@
 import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common'
 import {
-    ApiBadRequestResponse,
+    // ApiBadRequestResponse,
     ApiBody,
     ApiConflictResponse,
     ApiCreatedResponse,
@@ -18,58 +18,48 @@ export class UserController {
     constructor(private readonly userService: UserService) {}
 
     @Get()
-    @ApiOperation({ summary: 'Get all rent husbands' })
-    @ApiOkResponse({ description: 'Return list of all rent husbands' })
+    @ApiOperation({ summary: 'Obter todos os usuários' })
+    @ApiOkResponse({ description: 'Lista de retorno de todos os usuários' })
     async getAll(): Promise<User[]> {
         return this.userService.getAll()
     }
 
     @Get(':id')
-    @ApiOperation({ summary: 'Get rent husband by id' })
-    @ApiOkResponse({ description: 'Success in looking for rent husband' })
-    @ApiNotFoundResponse({ description: 'Rent husband not found for id' })
+    @ApiOperation({ summary: 'Obter usuário por id' })
+    @ApiOkResponse({ description: 'Sucesso na procura de usuário' })
+    @ApiNotFoundResponse({ description: 'Usuário não encontrado para id' })
     async findById(@Param('id') id: string): Promise<User> {
-        return this.userService.findByRentHusbandById(id)
+        return this.userService.findByUserById(id)
     }
 
     @Post('create')
-    @ApiOperation({ summary: 'Create a user' })
-    @ApiCreatedResponse({ description: 'Record created successfully!' })
-    @ApiBadRequestResponse({
-        description:
-            'An invalid date or a date older than the current one was informed',
-    })
-    @ApiConflictResponse({ description: 'User already registered!' })
+    @ApiOperation({ summary: 'Criar um usuário' })
+    @ApiCreatedResponse({ description: 'Registro criado com sucesso!' })
+    @ApiConflictResponse({ description: 'Usuário já cadastrado!' })
     @ApiBody({ type: CreateUserDTO })
-    async saveRentHusband(
-        @Body() payload: CreateUserDTO,
-    ): Promise<User> {
-        return this.userService.executeSave(payload)
+    async createUser(@Body() payload: CreateUserDTO): Promise<User> {
+        return this.userService.executeCreateUser(payload)
     }
 
     @Put(':id')
-    @ApiOperation({ summary: 'Update rent husband' })
+    @ApiOperation({ summary: 'Atualizar usuário' })
     @ApiBody({ type: CreateUserDTO })
-    @ApiOkResponse({ description: 'Sucessfully update rent husband' })
+    @ApiOkResponse({ description: 'Usuário atualizado com sucesso' })
     @ApiNotFoundResponse({
-        description: 'No rent husband found for the given id',
+        description: 'Nenhum usuário encontrado para o id fornecido',
     })
-    @ApiConflictResponse({ description: 'The rent husband already exists!' })
-    @ApiBadRequestResponse({
-        description:
-            'An invalid date or a date older than the current one was informed',
-    })
+    @ApiConflictResponse({ description: 'O usuário já existe!' })
     async update(
         @Param('id') id: string,
-        @Body() rentHusbandUpdated: UpdateUserDTO,
+        @Body() userUpdated: UpdateUserDTO,
     ): Promise<User> {
-        return this.userService.executeUpdate(id, rentHusbandUpdated)
+        return this.userService.executeUpdate(id, userUpdated)
     }
 
     @Delete(':id')
-    @ApiOperation({ summary: 'Delete a rent husband by its id' })
-    @ApiNotFoundResponse({ description: 'No location found for id!' })
-    @ApiOkResponse({ description: 'Rent husband successfully deleted!' })
+    @ApiOperation({ summary: 'Excluir um usuário por seu id' })
+    @ApiNotFoundResponse({ description: 'Nenhum local encontrado para id!' })
+    @ApiOkResponse({ description: 'Usuário deletado com sucesso!!' })
     async delete(@Param('id') id: string): Promise<User> {
         return this.userService.deleteById(id)
     }

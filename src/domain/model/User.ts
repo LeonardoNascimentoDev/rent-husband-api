@@ -1,4 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose'
+import { Specialtie } from './Specialtie'
 
 @Schema()
 export class User {
@@ -20,8 +21,8 @@ export class User {
     @Prop({ name: 'naturalness', nullable: true })
     naturalness: string
     
-    @Prop({ name: 'specialties', nullable: true })
-    specialties: string
+    @Prop({type: Array , default: [Specialtie] })
+    specialties: Specialtie[]
 
     @Prop({ name: 'zipCode', nullable: true })
     zipCode: string
@@ -43,6 +44,9 @@ export class User {
 
     @Prop({ name: 'complement', nullable: true })
     complement: string
+
+    @Prop({ name: 'actived', nullable: true })
+    actived?: boolean = true
 
     @Prop({ nullable: true })
     registerDate?: Date

@@ -1,10 +1,11 @@
 import { ApiProperty } from '@nestjs/swagger'
 import { IsString, IsNotEmpty, IsDateString } from 'class-validator'
+import { Specialtie } from '../model/Specialtie'
 
 export class CreateUserDTO {
     @ApiProperty({
         example: 'Leonardo Silva Nascimento',
-        description: 'Name of Rent Husband',
+        description: 'Name of User',
         type: String,
     })
     @IsNotEmpty()
@@ -13,7 +14,7 @@ export class CreateUserDTO {
 
     @ApiProperty({
         example: '12312323',
-        description: 'Number document of Rent Husband',
+        description: 'Number document of User',
         type: String,
     })
     @IsNotEmpty()
@@ -22,7 +23,7 @@ export class CreateUserDTO {
 
     @ApiProperty({
         example: 'teste@teste.com',
-        description: 'Email of Rent Husband',
+        description: 'Email of User',
         type: String,
     })
     @IsNotEmpty()
@@ -31,7 +32,7 @@ export class CreateUserDTO {
 
     @ApiProperty({
         description:
-            'The year, month and day of birth of the rent husband',
+            'The year, month and day of birth of the user',
         example: '20/12/1995',
     })
     @IsNotEmpty()
@@ -57,11 +58,11 @@ export class CreateUserDTO {
     @ApiProperty({
         example: 'List of specialtie',
         description: 'Professional specialties',
-        type: String,
+        type: Array,
     })
     @IsNotEmpty()
     @IsString()
-    specialties: string
+    specialties: Specialtie[]
 
     @ApiProperty({
         example: '81490030',
