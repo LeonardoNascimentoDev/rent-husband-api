@@ -4,13 +4,12 @@ import {
     NotFoundException,
     Logger,
     ConflictException,
-    // BadRequestException,
+    BadRequestException,
 } from '@nestjs/common'
 import { InjectModel } from '@nestjs/mongoose'
 import { Model } from 'mongoose'
 import { User } from '../domain/model/User'
-// import { DateUtils } from '../utils/date-utils'
-
+import { ValidateDocument } from '../utils/validate-document'
 @Injectable()
 export class UserRepository {
     private logger = new Logger('Users')
@@ -56,13 +55,29 @@ export class UserRepository {
         if (await this.findUser(payload)) {
             throw new ConflictException('Usuário já cadastrado!')
         } else {
-            const date = new Date(
-                new Date().valueOf() - new Date().getTimezoneOffset() * 60000,
-            )
-            payload.registerDate = date
-            payload.lastModifyDate = date
-            const userCreate = new this.userModel(payload)
-            return userCreate.save()
+            const validateDocument = new ValidateDocument()
+            if(payload.cpfCnpj.length === 11){
+                if(validateDocument.isValidCPF(payload.cpfCnpj)){
+                    const date = new Date(
+                        new Date().valueOf() - new Date().getTimezoneOffset() * 60000,
+                    )
+                    payload.registerDate = date
+                    payload.lastModifyDate = date
+                    const userCreate = new this.userModel(payload)
+                    return userCreate.save()
+                }
+            }else if(payload.cpfCnpj.length === 14){
+              if(validateDocument.cnpjValidation(payload.cpfCnpj)){
+                const date = new Date(
+                    new Date().valueOf() - new Date().getTimezoneOffset() * 60000,
+                )
+                    payload.registerDate = date
+                    payload.lastModifyDate = date
+                    const userCreate = new this.userModel(payload)
+                    return userCreate.save()
+              }
+            }
+            throw new BadRequestException('CNPJ ou CPF informado inválido!')
         }
     }
 
@@ -71,7 +86,7 @@ export class UserRepository {
         const userFinded = await this.findUser(user)
         if (!userFinded || userFinded == null) {
             throw new NotFoundException('Nenhum usuário foi encontrado para este id!')
-        } else if(userFinded._id.toString() != id){
+        } else if(userFinded._id.toString() != id) {
             throw new ConflictException('Usuário já registrado com este documento!')
         }
         const date = new Date()
@@ -97,6 +112,6 @@ export class UserRepository {
             this.logger.error('Erro ao deletar o usuário', err.stack)
             throw new InternalServerErrorException()
         }
-        return this.userModel.findByIdAndUpdate(id, {actived: false})
+        return this.userModel.findByIdAndUpdate(id, { actived: false })
     }
 }
