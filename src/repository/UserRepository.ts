@@ -9,7 +9,7 @@ import {
 import { InjectModel } from '@nestjs/mongoose'
 import { Model } from 'mongoose'
 import { User } from '../domain/model/User'
-import { ValidateDocument } from '../utils/validate-document'
+import { cpf, cnpj } from 'cpf-cnpj-validator'
 @Injectable()
 export class UserRepository {
     private logger = new Logger('Users')
@@ -55,9 +55,8 @@ export class UserRepository {
         if (await this.findUser(payload)) {
             throw new ConflictException('Usuário já cadastrado!')
         } else {
-            const validateDocument = new ValidateDocument()
             if(payload.cpfCnpj.length === 11){
-                if(validateDocument.isValidCPF(payload.cpfCnpj)){
+                if(cpf.isValid(payload.cpfCnpj)){
                     const date = new Date(
                         new Date().valueOf() - new Date().getTimezoneOffset() * 60000,
                     )
@@ -67,7 +66,7 @@ export class UserRepository {
                     return userCreate.save()
                 }
             }else if(payload.cpfCnpj.length === 14){
-              if(validateDocument.cnpjValidation(payload.cpfCnpj)){
+              if(cnpj.isValid(payload.cpfCnpj)){
                 const date = new Date(
                     new Date().valueOf() - new Date().getTimezoneOffset() * 60000,
                 )
